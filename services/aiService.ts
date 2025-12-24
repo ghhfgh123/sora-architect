@@ -74,7 +74,7 @@ Concept: "${concept}"`;
                 model: 'gemini-3-pro-preview',
                 contents: prompt,
             });
-            const result = response.text || "";
+            return response.text || "";
         } catch (e) {
             console.warn("Prompt refinement failed with key, trying next...", e);
         }
@@ -103,7 +103,7 @@ export const generateSoraScripts = async (
             console.log(`嘗試使用 Gemini Key: ${apiKey.substring(0, 5)}...`);
             const response = await tryGenerateWithGemini(apiKey, prompt, count, duration);
             
-            const cleanedText = cleanJson(response.text);
+            const cleanedText = cleanJson(response.text || "");
             const data = JSON.parse(cleanedText);
             return data.map((s: any, i: number) => ({ ...s, id: s.id || `gm-${Date.now()}-${i}`, status: 'idle' }));
         } catch (e: any) {
