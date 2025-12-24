@@ -74,7 +74,7 @@ Concept: "${concept}"`;
                 model: 'gemini-3-pro-preview',
                 contents: prompt,
             });
-            return response.text.trim();
+            const result = response.text || "";
         } catch (e) {
             console.warn("Prompt refinement failed with key, trying next...", e);
         }
